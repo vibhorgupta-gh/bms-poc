@@ -1,0 +1,40 @@
+{
+  "action_fingerprints": {
+    "action_listen": {
+      "slots": []
+    },
+    "complaint_form": {
+      "slots": []
+    },
+    "tracking_form": {
+      "slots": []
+    },
+    "utter_anything_else": {
+      "slots": []
+    },
+    "utter_confirmation": {
+      "slots": []
+    },
+    "utter_bye": {
+      "slots": []
+    }
+  },
+  "python": "3.6.9",
+  "max_histories": [
+    5,
+    5,
+    null,
+    2
+  ],
+  "ensemble_name": "rasa.core.policies.ensemble.SimplePolicyEnsemble",
+  "policy_names": [
+    "rasa.core.policies.keras_policy.KerasPolicy",
+    "rasa.core.policies.memoization.MemoizationPolicy",
+    "rasa.core.policies.fallback.FallbackPolicy",
+    "rasa.core.policies.form_policy.FormPolicy"
+  ],
+  "trained_at": "20190830-141325",
+  "rasa": "1.2.5",
+  "tensorflow": "1.13.2",
+  "sklearn": "0.20.4"
+}

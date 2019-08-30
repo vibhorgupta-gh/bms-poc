@@ -1,0 +1,11 @@
+language: en
+
+pipeline: "pretrained_embeddings_spacy"
+
+policies:
+  - name: KerasPolicy
+    epochs: 100
+  - name: MemoizationPolicy
+  - name: FallbackPolicy
+    fallback_action_name: 'utter_default'
+  - name: FormPolicy

@@ -1,0 +1,60 @@
+slots:
+  category:
+    type: unfeaturized
+    auto_fill: false
+  complaint_text:
+    type: unfeaturized
+    auto_fill: false
+  tracking_id:
+    type: unfeaturized
+    auto_fill: false
+
+forms:
+  - complaint_form
+  - tracking_form
+
+entities:
+  - category
+  - tracking_id
+
+intents:
+  - greet
+  - thanks
+  - bye
+  - track:
+      use_entities: []
+  - complaint:
+      use_entities: []
+
+
+actions:
+  - utter_greet
+  - utter_confirmation
+  - utter_anything_else
+  - utter_bye
+  - utter_default
+
+templates:
+  utter_greet:
+    - text: "Hello, How may I help you today?"
+  utter_ask_category:
+    - text: "Please select a domain for your complaint: \n
+            1.) Cheques and Drafts\n
+            2.) Internet Banking\n
+            3.) Service Charges\n
+            4.) Loans\n
+            5.) Card Transactions\n
+            6.) Others"
+  utter_ask_complaint_text:
+    - text: "Okay. Please state your complaint."
+  utter_confirmation:
+    - text: "Your complaint has been registered. We will get back to you ASAP."
+  utter_anything_else:
+    - text: "You are welcome."
+  utter_ask_tracking_id:
+    - text: "Please state your tracking id."
+    - text: "What is the tracking ID of your complaint?"
+  utter_bye:
+    - text: "Bye and have a nice day"
+  utter_default:
+    - text: "sorry, I didn't understand you, please try input something else"

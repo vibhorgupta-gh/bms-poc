@@ -1,0 +1,229 @@
+{
+  "rasa_nlu_data": {
+    "common_examples": [
+      {
+        "intent": "greet",
+        "text": "Hi"
+      },
+      {
+        "intent": "greet",
+        "text": "Hey"
+      },
+      {
+        "intent": "greet",
+        "text": "Hello"
+      },
+      {
+        "intent": "complaint",
+        "text": "I would like to register a complaint."
+      },
+      {
+        "intent": "complaint",
+        "text": "Register a complaint."
+      },
+      {
+        "intent": "complaint",
+        "entities": [
+          {
+            "start": 43,
+            "end": 61,
+            "value": "cheques and drafts",
+            "entity": "category"
+          }
+        ],
+        "text": "I would like to register a complaint about cheques and drafts."
+      },
+      {
+        "intent": "complaint",
+        "entities": [
+          {
+            "start": 43,
+            "end": 59,
+            "value": "internet banking",
+            "entity": "category"
+          }
+        ],
+        "text": "I would like to register a complaint about internet banking."
+      },
+      {
+        "intent": "complaint",
+        "entities": [
+          {
+            "start": 27,
+            "end": 42,
+            "value": "service charges",
+            "entity": "category"
+          }
+        ],
+        "text": "Register a complaint about service charges."
+      },
+      {
+        "intent": "complaint",
+        "entities": [
+          {
+            "start": 27,
+            "end": 32,
+            "value": "loans",
+            "entity": "category"
+          }
+        ],
+        "text": "Register a complaint about loans."
+      },
+      {
+        "intent": "complaint",
+        "entities": [
+          {
+            "start": 27,
+            "end": 44,
+            "value": "card transactions",
+            "entity": "category"
+          }
+        ],
+        "text": "Register a complaint about card transactions."
+      },
+      {
+        "intent": "complaint",
+        "entities": [
+          {
+            "start": 0,
+            "end": 5,
+            "value": "loans",
+            "entity": "category"
+          }
+        ],
+        "text": "loans"
+      },
+      {
+        "intent": "complaint",
+        "entities": [
+          {
+            "start": 0,
+            "end": 15,
+            "value": "service charges",
+            "entity": "category"
+          }
+        ],
+        "text": "service charges"
+      },
+      {
+        "intent": "complaint",
+        "entities": [
+          {
+            "start": 0,
+            "end": 16,
+            "value": "internet banking",
+            "entity": "category"
+          }
+        ],
+        "text": "internet banking"
+      },
+      {
+        "intent": "complaint",
+        "entities": [
+          {
+            "start": 0,
+            "end": 17,
+            "value": "card transactions",
+            "entity": "category"
+          }
+        ],
+        "text": "card transactions"
+      },
+      {
+        "intent": "track",
+        "text": "I would like to track a complaint."
+      },
+      {
+        "intent": "track",
+        "text": "I would like to track my complaint."
+      },
+      {
+        "intent": "track",
+        "text": "Track a complaint for me."
+      },
+      {
+        "intent": "track",
+        "text": "Track my complaint."
+      },
+      {
+        "intent": "track",
+        "text": "What is the status of my complaint."
+      },
+      {
+        "intent": "track",
+        "entities": [
+          {
+            "start": 0,
+            "end": 3,
+            "value": "243",
+            "entity": "tracking_id"
+          }
+        ],
+        "text": "243"
+      },
+      {
+        "intent": "track",
+        "entities": [
+          {
+            "start": 0,
+            "end": 3,
+            "value": "195",
+            "entity": "tracking_id"
+          }
+        ],
+        "text": "195"
+      },
+      {
+        "intent": "track",
+        "entities": [
+          {
+            "start": 0,
+            "end": 3,
+            "value": "798",
+            "entity": "tracking_id"
+          }
+        ],
+        "text": "798"
+      },
+      {
+        "intent": "track",
+        "entities": [
+          {
+            "start": 0,
+            "end": 3,
+            "value": "446",
+            "entity": "tracking_id"
+          }
+        ],
+        "text": "446"
+      },
+      {
+        "intent": "thanks",
+        "text": "Thanks."
+      },
+      {
+        "intent": "thanks",
+        "text": "Thank you so much."
+      },
+      {
+        "intent": "thanks",
+        "text": "Thanks for your help."
+      },
+      {
+        "intent": "bye",
+        "text": "No, I am good as of now. Bye."
+      },
+      {
+        "intent": "bye",
+        "text": "Bye."
+      },
+      {
+        "intent": "bye",
+        "text": "Bbye."
+      }
+    ],
+    "regex_features": [],
+    "lookup_tables": [],
+    "entity_synonyms": []
+  }
+}
