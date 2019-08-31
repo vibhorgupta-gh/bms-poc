@@ -11,12 +11,18 @@
       <button> Logout </button>
     </form>
     <div>
-      <form action="/" method="post">
+      <form action="/checker" method="post">
         <div>
           <label>
             Query:
           </label>
           <input type="text" name="query" required>
+
+          <label>
+            Role:
+          </label>
+          <input type="text" name="role" value={{user.role}}>
+
         </div>
         <button>Submit Query</button>
       </form>

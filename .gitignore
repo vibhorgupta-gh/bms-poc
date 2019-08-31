@@ -4,4 +4,9 @@ __pycache__/*
 chatbot/__pycache__/*
 chatbot/.idea/*
 
+fraud/__pycache__/*
+fraud/.idea
+fraud/venv
+
 *.pkl
+*.pyc

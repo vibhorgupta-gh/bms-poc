@@ -1,5 +1,7 @@
-from flask import Flask, request, Response, json, render_template, redirect
+from flask import Flask, request, Response, json, render_template, redirect, jsonify
 from master import save_user, get_steps, enqueue_job, success_q_to_res, signup, login_helper
+import fraud.query_checker as qs
+from datetime import date
 
 app = Flask(__name__)
 
@@ -77,6 +79,23 @@ def handle_done(uid):
         return Response(response=json.dumos(result), status=200)
     except Exception as e:
         return Response('{"error":"' + str(e) + '"}', status=400)
+
+
+# fraud endpoint
+@app.route('/checker', methods=['POST'])
+def check_query():
+    query_data = request.form
+    print(query_data)
+    role = int(query_data['role'])
+    query = query_data['query'].split(',')
+    for index in range(0, len(query)):
+        query[index] = int(query[index])
+    query = [0] + query
+    user = int(query_data['user'])
+    timestamp = date.today()
+    transaction = [role, user, timestamp, query]
+    print(transaction)
+    return jsonify({'response' : checker(transaction)})
 
 
 # serve app
