@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+  </head>
+  <body>
+    <h1> Welcome, {{ user.name }}! </h1>
+    <h3> You have {{ user.role }} access </h3>
+    <form action="/logout" method="get">
+      <button> Logout </button>
+    </form>
+    <div>
+      <form action="/" method="post">
+        <div>
+          <label>
+            Query:
+          </label>
+          <input type="text" name="query" required>
+        </div>
+        <button>Submit Query</button>
+      </form>
+    </div>
+  </body>
+</html>
