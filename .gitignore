@@ -1,2 +1,7 @@
-dump.rdb
 poc/*
+__pycache__/*
+
+chatbot/__pycache__/*
+chatbot/.idea/*
+
+*.pkl
