@@ -1,16 +1,55 @@
-from flask import Flask, request, Response, json
-from master import save_user, get_steps, enqueue_job, success_q_to_res
+from flask import Flask, request, Response, json, render_template, redirect
+from master import save_user, get_steps, enqueue_job, success_q_to_res, signup, login_helper
 
 app = Flask(__name__)
 
 # routes
-
 @app.route('/', methods=['GET'])
 def welcome():
     try:
-        return Response('{"status":"success"}', status=200)
+        return render_template('landing.html')
     except Exception as e:
-        return Response('{"error":"' + str(e) + '"}', status=400)
+        return render_template('error.html', error = str(e))
+
+
+@app.route('/signup', methods=['GET','POST'])
+def register():
+    try:
+        if request.method == 'GET':
+            return render_template('signup.html', request = request)
+        elif request.method == 'POST':
+            r = request.form
+            name, e_id, role = r['name'], r['e_id'], r['role']
+            result = signup(name, e_id, role)
+            if result is not 'success':
+                raise Exception('Cant register user: ' + str(result))
+            return render_template('login.html', request = request)
+    except Exception as e:
+        return render_template('error.html', error = str(e))
+
+
+@app.route('/login', methods=['GET','POST'])
+def login():
+    try:
+        if request.method == 'GET':
+            return render_template('login.html', request = request)
+        elif request.method == 'POST':
+            r = request.form
+            name, e_id, role = r['name'], r['e_id'], r['role']
+            token = login_helper(name, e_id)
+            if token is not 'success_token':
+                raise Exception('User not registered: ' + str(token))
+            return render_template('dashboard.html', user = {'name': name, 'role': role})
+    except Exception as e:
+        return render_template('error.html', error = str(e))
+
+
+@app.route('/logout', methods=['GET'])
+def logout():
+    try:
+        return redirect('http://localhost:5000/login', code=302)
+    except Exception as e:
+        return render_template('error.html', error = str(e))
 
 
 @app.route('/fn/<string:uid>', methods=['POST'])

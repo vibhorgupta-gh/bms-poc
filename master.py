@@ -5,6 +5,12 @@ success_q = list()
 
 
 # Models
+class Employee(object):
+    def __init__(self, name, e_id, role):
+        self.name=name
+        self.e_id=e_id
+        self.role=role
+
 class User(object):
     def __init__(self, uid, purpose, priority):
         self.uid=uid
@@ -21,6 +27,40 @@ class Purpose(object):
     def __init__(self, name, steps):
         self.name=name
         self.steps=steps
+
+
+# auth helpers
+def signup(name, e_id, role):
+    try:
+        employee_dict = {}
+        with open('employee.pkl', 'rb') as employees:
+            employee_dict = pickle.load(employees)
+
+        for el in employee_dict:
+            if employee_dict[str(el)].e_id == e_id:
+                return 'success'
+        employee_dict[str(e_id)] = Employee(name, e_id, role)
+        with open('employee.pkl', 'wb') as employees:
+            pickle.dump(employee_dict, employees)
+
+        return 'success'
+    except Exception as e:
+        return str(e)
+
+
+def login_helper(name, e_id):
+    try:
+        employee_dict = {}
+        with open('employee.pkl', 'rb') as employees:
+            employee_dict = pickle.load(employees)
+
+        for el in employee_dict:
+            if employee_dict[str(el)].e_id == e_id:
+                return 'success_token'
+
+        return 'failure_token'
+    except Exception as e:
+        return str(e)
 
 
 # helpers
@@ -80,9 +120,6 @@ def init_data():
     func['B'] = ['a', 'z', 'x']
     func['C'] = ['a', 'b', 'c']
 
-    with open('function.pkl', 'wb') as func_store:
-        pickle.dump(func, func_store)
-
     steps = dict()
     steps['x'] = Step('x', 3, [[],[],[]])
     steps['z'] = Step('z', 4, [[],[],[],[]])
@@ -90,8 +127,17 @@ def init_data():
     steps['b'] = Step('b', 3, [[],[],[]])
     steps['c'] = Step('c', 4, [[],[],[],[]])
 
+    employee_dict = dict()
+    employee_dict['666'] = Employee('John Doe', '666', 'admin')
+
+    with open('function.pkl', 'wb') as func_store:
+        pickle.dump(func, func_store)
+
     with open('steps.pkl', 'wb') as step_store:
         pickle.dump(steps, step_store)
+
+    with open('employee.pkl', 'wb') as employees:
+        pickle.dump(employee_dict, employees)
 
 
 def get_steps(purpose):
