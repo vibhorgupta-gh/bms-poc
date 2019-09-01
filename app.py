@@ -1,7 +1,8 @@
 from flask import Flask, request, Response, json, render_template, redirect, jsonify
-from master import save_user, get_steps, enqueue_job, success_q_to_res, signup, login_helper
-import fraud.query_checker as qs
+from qms import User, save_user, get_steps, enqueue_job, success_q_to_res, signup, login_helper, job_q_to_qms
+# from fraud.query_checker import checker
 from datetime import date
+import threading
 
 app = Flask(__name__)
 
@@ -14,6 +15,7 @@ def welcome():
         return render_template('error.html', error = str(e))
 
 
+# auth endpoints
 @app.route('/signup', methods=['GET','POST'])
 def register():
     try:
@@ -54,6 +56,7 @@ def logout():
         return render_template('error.html', error = str(e))
 
 
+# business logic endpoints
 @app.route('/fn/<string:uid>', methods=['POST'])
 def handle_fn(uid):
     try:
@@ -76,7 +79,7 @@ def handle_done(uid):
         result = success_q_to_res(uid)
         if not result:
             raise Exception('No response from logic')
-        return Response(response=json.dumos(result), status=200)
+        return Response(response=json.dumps(result), status=200)
     except Exception as e:
         return Response('{"error":"' + str(e) + '"}', status=400)
 
@@ -100,4 +103,7 @@ def check_query():
 
 # serve app
 if __name__ == '__main__':
+    job = threading.Thread(target=job_q_to_qms, args=())
+    job.daemon = True
+    job.start()
     app.run(host='127.0.0.1', port='5000', debug=True)

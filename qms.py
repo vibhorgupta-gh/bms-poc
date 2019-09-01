@@ -1,8 +1,13 @@
-import pickle
+import pickle, time
 
 job_q = list()
 success_q = list()
 
+def make_global():
+    global job_q
+    global success_q
+
+make_global()
 
 # Models
 class Employee(object):
@@ -69,13 +74,19 @@ def enqueue_job(user_object):
 
 
 def qms_to_success_q(user_object, counter, row):
-    success_q.append(tuple(user_object, counter, row))
+    success_q.append((user_object, counter, row))
 
 
 def success_q_to_res(uid):
+    # import ipdb; ipdb.set_trace()
     while True:
-        if success_q[0][0]['uid'] is uid:
-            return success_q.pop(0)
+        if len(success_q) == 0:
+            time.sleep(0.5)
+            continue
+        elif success_q[0][0].uid is uid:
+            response = [success_q[0][0].uid, success_q[0][1], success_q[0][2]]
+            success_q.pop(0)
+            return response
 
 
 def save_user(uid, purpose, priority):
@@ -95,7 +106,7 @@ def save_user(uid, purpose, priority):
                 'visited': False,
                 'q_index': -1
             }
-            steps.push(step_dict)
+            steps.append(step_dict)
 
         purpose_object = Purpose(purpose, steps)
 
@@ -128,7 +139,7 @@ def init_data():
     steps['c'] = Step('c', 4, [[],[],[],[]])
 
     employee_dict = dict()
-    employee_dict['666'] = Employee('John Doe', '666', 'admin')
+    employee_dict['666'] = Employee('John Doe', '666', '1')
 
     with open('function.pkl', 'wb') as func_store:
         pickle.dump(func, func_store)
@@ -142,7 +153,7 @@ def init_data():
 
 def get_steps(purpose):
     step_list = []
-    with open('function.pkl', 'wb') as func_store:
+    with open('function.pkl', 'rb') as func_store:
         func = pickle.load(func_store)
         step_list = func[str(purpose)]
 
@@ -156,37 +167,42 @@ def queue_manager(user):
         with open('user_purpose.pkl', 'rb') as u_purpose:
             u_dict = pickle.load(u_purpose)
 
-        purpose_object = u_dict[str(uid)]
-        counter_name, prev_idx = '', -1
+        purpose_object = u_dict[str(user.uid)]
+        counter_name, prev_idx, all_visited = '', -1, True
 
         # extract last visited from user state
-        for i in range(len(purpose_object['steps'])-1):
-            step_list = purpose_object['steps']
+        for i in range(len(purpose_object.steps)-1):
+            step_list = purpose_object.steps
             if step_list[i]['visited'] is True and step_list[i+1]['visited'] is False:
                 counter_name = step_list[i]['data']
                 prev_idx = step_list[i]['q_index']
                 break
 
         # remove from and set counter state
-        steps = {}
-        with open('steps.pkl', 'rb') as step_store:
-            steps = pickle.load(step_store)
+        if prev_idx != -1:
+            steps = {}
+            with open('steps.pkl', 'rb') as step_store:
+                steps = pickle.load(step_store)
 
-        step_object = steps[str(counter_name)]
-        if step_object['counters'][idx][0]['uid'] is not user['uid']:
-            return 'ghost customer'
+            step_object = steps[str(counter_name)]
+            if step_object.counters[prev_idx][0].uid != user.uid:
+                return 'ghost customer'
 
-        step_object['counters'][idx].pop(0)
-        steps[str(counter_name)] = step_object
+            step_object.counters[prev_idx].pop(0)
+            steps[str(counter_name)] = step_object
 
-        with open('steps.pkl', 'wb') as step_store:
-            pickle.dump(steps, step_store)
+            with open('steps.pkl', 'wb') as step_store:
+                pickle.dump(steps, step_store)
 
         # extract not visited from user state
-        for step in purpose_object['steps']:
+        for step in purpose_object.steps:
             if step['visited'] is False:
+                all_visited = False
                 counter_name = step['data']
                 break
+
+        if all_visited is True:
+            return 'Purpose fulfilled'
 
         # calculate and set in counter state
         steps = {}
@@ -195,24 +211,24 @@ def queue_manager(user):
 
         step_object = steps[str(counter_name)]
         size, idx = 1000, -1
-        for i in range(len(step_object['counters'])):
-            if len(step_object['counters'][i]) <= size:
-                size, idx = len(step_object['counters'][i]), i
+        for i in range(len(step_object.counters)):
+            if len(step_object.counters[i]) <= size:
+                size, idx = len(step_object.counters[i]), i
 
-        step_object['counters'][idx].append(user)
+        step_object.counters[idx].append(user)
         steps[str(counter_name)] = step_object
 
         with open('steps.pkl', 'wb') as step_store:
             pickle.dump(steps, step_store)
 
         # save user state
-        for step in purpose_object['steps']:
+        for step in purpose_object.steps:
             if step['visited'] is False:
                 step['visited'] = True
                 step['q_index'] = idx
                 break
 
-        u_dict[str(uid)] = purpose_object
+        u_dict[str(user.uid)] = purpose_object
         with open('user_purpose.pkl', 'wb') as u_purpose:
             pickle.dump(u_dict, u_purpose)
 
@@ -222,6 +238,17 @@ def queue_manager(user):
 
     except Exception as e:
         return str(e)
+
+
+def job_q_to_qms():
+    while True:
+        time.sleep(1)
+        while len(job_q):
+            user = job_q.pop(0)
+            status = queue_manager(user)
+            print(status)
+            if status != 'success':
+                enqueue_job(user)
 
 
 init_data()
