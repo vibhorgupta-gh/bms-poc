@@ -1,39 +1,73 @@
-<!DOCTYPE html>
-<html lang="en" dir="ltr">
-  <head>
-    <meta charset="utf-8">
-    <title></title>
-  </head>
-  <body>
-    <h1> Login </h1>
-    <div>
-      <form action="/login" method="post">
-        <div>
+<link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<!------ Include the above in your HEAD tag ---------->
 
-          <div>
-            <label>
-              Name:
-            </label>
-            <input type="text" name="name" required>
-          </div>
+<section class="testimonial py-5" id="testimonial">
+    <div class="container">
+        <div class="row ">
+            <div class="col-md-4 py-5 bg-primary text-white text-center ">
+                <div class=" ">
+                    <div class="card-body">
+                        <img src="./public/static/syndicate_logo.png" style="width:80%">
+                        <h2 class="py-3">Login</h2>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-8 py-5 border">
+                <h4 class="pb-4">Please fill with your details</h4>
+                <form action="/login" method="post">
+                    <div class="form-row">
+                        <div class="form-group col-md-6">
+                            <input id="Full Name" name="name" placeholder="Full Name" class="form-control" type="text">
+                        </div>
+                        <div class="form-group col-md-6">
+                            <input type="email" name="e_id" class="form-control" id="inputEmail4" placeholder="Email">
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <!--<div class="form-group col-md-6">-->
+                        <!--<input id="Mobile No." name="mobile" placeholder="Mobile No." class="form-control" required="required" type="text">-->
+                        <!--</div>-->
+                        <div class="form-group col-md-6">
 
-          <div>
-            <label>
-              Employee ID:
-            </label>
-            <input type="text" name="e_id" required>
-          </div>
+                            <select id="role" class="form-control" name="role">
+                                <option selected>Select Role</option>
+                                <option> Admin</option>
+                                <option> Employee</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <div class="form-group">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" value="" id="invalidCheck2"
+                                           required>
+                                    <label class="form-check-label" for="invalidCheck2">
+                                        <small>By clicking Submit, you agree to our Terms & Conditions, Visitor
+                                            Agreement and Privacy Policy.
+                                        </small>
+                                    </label>
+                                </div>
+                            </div>
 
-          <div>
-            <label>
-              Role (admin/user):
-            </label>
-            <input type="text" name="role" required>
-          </div>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <button type="button" class="btn btn-danger">Submit</button>
+                    </div>
+                </form>
+
+                <form action="/signup" method="get">
+                    <h6 class="pb-6">Not Registered? Sign Up</h6>
+                    <div class="form-row">
+                        <button type="button" class="btn btn-danger">Sign Up</button>
+                    </div>
+                </form>
+            </div>
 
         </div>
-        <button>Log In</button>
-      </form>
     </div>
-  </body>
-</html>
+</section>
