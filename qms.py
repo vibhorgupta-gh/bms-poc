@@ -2,10 +2,12 @@ import pickle, time
 
 job_q = list()
 success_q = list()
+waiting_q = list()
 
 def make_global():
     global job_q
     global success_q
+    global waiting_q
 
 make_global()
 
@@ -78,7 +80,6 @@ def qms_to_success_q(user_object, counter, row):
 
 
 def success_q_to_res(uid):
-    # import ipdb; ipdb.set_trace()
     while True:
         if len(success_q) == 0:
             time.sleep(0.5)
@@ -127,7 +128,7 @@ def notify_HVI(user):
 # data helpers
 def init_data():
     func = dict()
-    func['A'] = ['x', 'b', 'z']
+    func['Locker'] = ['x', 'b', 'z']
     func['B'] = ['a', 'z', 'x']
     func['C'] = ['a', 'b', 'c']
 

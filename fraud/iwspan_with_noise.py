@@ -45,7 +45,7 @@ def get_loc(pattern, seq):
 
 
 def finding_WS(x, sdbi, r, thresh, sensitivity, tsmw):
-    
+
     smw = {}
     # tid is transaction id
     for tid in sdbi:
@@ -54,7 +54,7 @@ def finding_WS(x, sdbi, r, thresh, sensitivity, tsmw):
         for att in seq:
             smw_seq = max(smw_seq, sensitivity[att])
         smw[tid] = smw_seq
-    
+
     TS = {}
     for tid in sdbi:
         seq = sdbi[tid]
@@ -65,7 +65,7 @@ def finding_WS(x, sdbi, r, thresh, sensitivity, tsmw):
             if subseq not in TS.keys():
                 ST = SeqTuple(subseq, tsmw)
                 TS[tuple(subseq)] = ST
-    
+
     for seqx in TS:
         for tid in sdbi:
             seq = sdbi[tid]
@@ -75,7 +75,7 @@ def finding_WS(x, sdbi, r, thresh, sensitivity, tsmw):
                 TS[seqx].swub += smw[tid]/tsmw
                 TS[seqx].cnt += 1
         TS[seqx].wsup = TS[seqx].weight*TS[seqx].cnt
-    
+
     WFUBX = []
     WSX = []
     for pattern in TS.keys():
@@ -84,13 +84,13 @@ def finding_WS(x, sdbi, r, thresh, sensitivity, tsmw):
             WFUBX.append(pattern)
         if TS[pattern].wsup >= thresh:
             WSX.append(pattern)
-    
+
     PIX = []
     for ix in WFUBX:
         PIX = PIX + list(ix)
     PIX = set(PIX)
     r = r+1
-    
+
     for tid in sdbi.keys():
         seq = sdbi[tid]
         for att in seq:
@@ -98,7 +98,7 @@ def finding_WS(x, sdbi, r, thresh, sensitivity, tsmw):
                 seq.remove(att)
         if len(seq) < r+1:
             del sdbi[tid]
-    
+
     WSX = []
     WFUBX.sort()
     #print("hi",len(WFUBX))
@@ -121,7 +121,7 @@ def finding_WS(x, sdbi, r, thresh, sensitivity, tsmw):
 
 
 def IWSPAN(sensitivity, sequences, thresh):
-    
+
     smw = {}
     # tid is transaction id
     for tid in sequences.keys():
@@ -132,12 +132,12 @@ def IWSPAN(sensitivity, sequences, thresh):
             smw_seq = max(smw_seq, sensitivity[att])
         #print(smw_seq)
         smw[tid] = smw_seq
-        
+
     tsmw = 0.0
     for tid in smw:
         tsmw = tsmw + smw[tid]
     #print(tsmw)
-    
+
     swub = {}
     wsup = {}
     for tid in sequences:
@@ -156,18 +156,18 @@ def IWSPAN(sensitivity, sequences, thresh):
             val = val + smw[tid]
         swub[att] = (val/tsmw)
         #print(att,swub[att],wsup[att])
-        
-    # print(swub)     
+
+    # print(swub)
     WFUB = []
     WS = []
-    attributes = sensitivity.keys() 
+    attributes = sensitivity.keys()
     ## attributes represent length 1 subsequences
     for att in attributes:
         if att in swub.keys() and swub[att] >= thresh :
             WFUB.append(att)
         if att in wsup.keys() and wsup[att] >= thresh :
             WS.append(att)
-    
+
     r = 1
     PI = WFUB[:]
     for tid in sequences.keys():
@@ -177,7 +177,7 @@ def IWSPAN(sensitivity, sequences, thresh):
                 seq.remove(att)
         if len(seq) < r+1:
             del sequences[tid]
-     
+
     WSA = []
     WFUB.sort()
     for att in WFUB:
@@ -209,7 +209,7 @@ for i in range(0,70):
 # print (att_sensitivity['['])
 # exit()
 
-pickle_in = open("sequences_with_noise.pickle","rb")
+pickle_in = open("fraud/sequences_with_noise.pickle","rb")
 transactions = pickle.load(pickle_in)
 # transactions = generator()
 
@@ -273,7 +273,7 @@ for roleid in range(0,5):
             pattern_new.append((ord(element))-65)
         patterns_write_new.append(pattern_new)
 
-    patterns_numbers[roleid] = (patterns_read_new,patterns_write_new) 
+    patterns_numbers[roleid] = (patterns_read_new,patterns_write_new)
 
     patterns_req_read = []
     for i in patterns_read:
@@ -307,9 +307,9 @@ print (patterns[0][0])
 print ()
 print (patterns[0][1])
 print ()
-pickle_out = open("patterns_with_noise.pickle","wb")
+pickle_out = open("fraud/patterns_with_noise.pickle","wb")
 pickle.dump(patterns, pickle_out,protocol=2)
 pickle_out.close()
-pickle_out = open("patterns_numbers_with_noise.pickle","wb")
+pickle_out = open("fraud/patterns_numbers_with_noise.pickle","wb")
 pickle.dump(patterns_numbers, pickle_out,protocol=2)
 pickle_out.close()

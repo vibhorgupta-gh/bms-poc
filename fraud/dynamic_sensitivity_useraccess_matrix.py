@@ -2,7 +2,7 @@ import pickle
 
 def dynamic_sens():
 	count = {}
-	pickle_in = open("sequences_with_noise.pickle","rb")
+	pickle_in = open("fraud/sequences_with_noise.pickle","rb")
 	trans = pickle.load(pickle_in)
 	for tran in trans:
 		role = tran[0]
@@ -12,7 +12,7 @@ def dynamic_sens():
 			for att in atts:
 				if ind!=0:
 					if att in count[role].keys():
-						count[role][att] += 1 
+						count[role][att] += 1
 					else:
 						count[role][att] = 1
 				ind+=1
@@ -36,8 +36,8 @@ def dynamic_sens():
 
 def user_access_matrix():
 	count = {}
-	pickle_in = open("sequences_with_noise.pickle","rb")
-	trans = pickle.load(pickle_in)	
+	pickle_in = open("fraud/sequences_with_noise.pickle","rb")
+	trans = pickle.load(pickle_in)
 	for tran in trans:
 		user = str(tran[0]) + str(tran[2])
 		atts = tran[3]
@@ -46,7 +46,7 @@ def user_access_matrix():
 			for att in atts:
 				if ind!=0:
 					if att in count[user].keys():
-						count[user][att] += 1 
+						count[user][att] += 1
 					else:
 						count[user][att] = 1
 				ind+=1
@@ -81,7 +81,7 @@ def suspic_score(si_matrix):
 
 def AUB_create(si_matrix,role,user):
 	weights = {1:0.9,2:0.2,3:0.4,4:0.9,5:0.9,6:0.4,7:0.4,8:0.9,9:0.2,10:0.4,11:0.9,12:0.4,13:0.2,14:0.2,15:0.9}
-	pickle_in = open("sequences_with_noise.pickle","rb")
+	pickle_in = open("fraud/sequences_with_noise.pickle","rb")
 	trans = pickle.load(pickle_in)
 	#15 - 7
 	AUB = {0:[],1:[],2:[],3:[],4:[]}
@@ -108,7 +108,7 @@ def AUB_create(si_matrix,role,user):
 			for i in range(1,len(seq)):
 				# attr += 1
 				ind = int((seq[i])/10)
-				table[ind] += 1 
+				table[ind] += 1
 				# if weights[i]<0.3:
 				# 	low += 1
 				# elif weights[i]>0.3 and weights[i]<0.6:
@@ -126,7 +126,7 @@ def AUB_create(si_matrix,role,user):
 
 
 def ret_sens_mapping(count):
-	
+
 	if count<=3 :
 		return 'low'
 	elif count<=6 :
@@ -148,15 +148,15 @@ def AUB_generator(trans):
 	si_matrix = singulrity_index(dyn_sens,user_acc_mat)
 	sus_score = suspic_score(si_matrix)
 	sus_score_query = 0
-	pickle_out = open("si_matrix.pickle","wb")
+	pickle_out = open("fraud/si_matrix.pickle","wb")
 	pickle.dump(si_matrix, pickle_out,protocol=2)
 	pickle_out.close()
-	pickle_out = open("sus_score.pickle","wb")
+	pickle_out = open("fraud/sus_score.pickle","wb")
 	pickle.dump(sus_score, pickle_out,protocol=2)
 	pickle_out.close()
 	map_sus = []
 	aub = AUB_create(si_matrix,trans[0],trans[2])
-	pickle_out = open("aub.pickle","wb")
+	pickle_out = open("fraud/aub.pickle","wb")
 	pickle.dump(aub, pickle_out,protocol=2)
 	pickle_out.close()
 	exit()

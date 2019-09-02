@@ -1,6 +1,6 @@
 import pickle
 
-pickle_in = open("sequences_with_noise.pickle","rb")
+pickle_in = open("fraud/sequences_with_noise.pickle","rb")
 transactions = pickle.load(pickle_in)
 
 fin = []
@@ -16,10 +16,10 @@ for trans in transactions:
 		a.append(b)
 		fin.append(a)
 
-pickle_out = open("sequences_with_noise.pickle","wb")
+pickle_out = open("fraud/sequences_with_noise.pickle","wb")
 pickle.dump(fin, pickle_out,protocol=2)
 pickle_out.close()
-pickle_in = open("sequences_with_noise.pickle","rb")
+pickle_in = open("fraud/sequences_with_noise.pickle","rb")
 transactions = pickle.load(pickle_in)
 
 print (transactions[0])

@@ -1,12 +1,12 @@
-from string_similarity_calculator import *
+from fraud.string_similarity_calculator import *
 import pickle
 def r_matcher(sequence):
 	weights = {'a':0.9,'b':0.9,'c':0.9,'d':0.9,'e':0.9,'f':0.9,'g':0.9,'h':0.9,'i':0.9,'j':0.9,'k':0.9,'l':0.9,'m':0.9,'n':0.9,'o':0.9}
 	if sequence[3][0]==0:
-		pickle_in = open("read_rules_with_noise.pickle","rb")
+		pickle_in = open("fraud/read_rules_with_noise.pickle","rb")
 		rules = pickle.load(pickle_in)
 		matched_key_elements = 0
-		
+
 		if (len(sequence[3])<2):
 			# print sequence
 			exit()
@@ -23,7 +23,7 @@ def r_matcher(sequence):
 					if score>=item_score and len(i)<=len(s):
 						item_score = score
 						# denom = len(i)
-			# total_score = total_score +  item_score #* weights[chr(int(sequence[3][ind])+65)] 
+			# total_score = total_score +  item_score #* weights[chr(int(sequence[3][ind])+65)]
 			# total_denom += denom*1.0
 			if denom!=0:
 				denom = denom*1.0
@@ -37,10 +37,10 @@ def r_matcher(sequence):
 
 
 	else:
-		pickle_in = open("write_rules_with_noise.pickle","rb")
+		pickle_in = open("fraud/write_rules_with_noise.pickle","rb")
 		rules = pickle.load(pickle_in)
 		matched_key_elements = 0
-		
+
 		if (len(sequence[3])<2):
 			# print sequence
 			exit()

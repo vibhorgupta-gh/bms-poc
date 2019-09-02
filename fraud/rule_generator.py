@@ -1,6 +1,6 @@
-import pickle 
+import pickle
 
-pickle_in = open("patterns_with_noise.pickle","rb")
+pickle_in = open("fraud/patterns_with_noise.pickle","rb")
 patterns = pickle.load(pickle_in)
 # print(patterns)
 
@@ -27,7 +27,7 @@ for roleid in patterns.keys():
 
 
 # print(read_rule_dict)
-pickle_out = open("read_rules_with_noise.pickle","wb")
+pickle_out = open("fraud/read_rules_with_noise.pickle","wb")
 pickle.dump(read_rule_dict, pickle_out,protocol=2)
 pickle_out.close()
 
@@ -56,7 +56,7 @@ for roleid in patterns.keys():
 
 
 # print(write_rule_dict)
-pickle_out = open("write_rules_with_noise.pickle","wb")
+pickle_out = open("fraud/write_rules_with_noise.pickle","wb")
 pickle.dump(write_rule_dict, pickle_out,protocol=2)
 pickle_out.close()
 

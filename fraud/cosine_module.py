@@ -1,4 +1,4 @@
-from dynamic_sensitivity_useraccess_matrix import *
+from fraud.dynamic_sensitivity_useraccess_matrix import *
 from math import sqrt
 import numpy as np
 from sklearn.decomposition import PCA
@@ -12,7 +12,7 @@ def cosine_cal_1(trans):
 	# aub_normalized = preprocessing.normalize(aub)
 	# print (aub_normalized)
 	sus_score = 0
-	pickle_in = open("aub.pickle","rb")
+	pickle_in = open("fraud/aub.pickle","rb")
 	AUB = pickle.load(pickle_in)
 	aub = AUB[trans[0]]
 	seq = trans[3]
@@ -95,4 +95,3 @@ def cosine_cal_1(trans):
 
 
 
-	

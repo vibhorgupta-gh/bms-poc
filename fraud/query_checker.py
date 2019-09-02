@@ -1,5 +1,5 @@
-from rule_matcher import *
-from cosine_module import *
+from fraud.rule_matcher import *
+from fraud.cosine_module import *
 import math
 
 def driver(trans):

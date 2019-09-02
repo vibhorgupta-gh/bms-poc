@@ -1,8 +1,9 @@
 from flask import Flask, request, Response, json, render_template, redirect, jsonify
 from qms import User, save_user, get_steps, enqueue_job, success_q_to_res, signup, login_helper, job_q_to_qms
-# from fraud.query_checker import checker
+from fraud.query_checker import checker
 from datetime import date
 import threading
+from werkzeug.datastructures import ImmutableMultiDict
 
 app = Flask(__name__)
 
@@ -65,7 +66,7 @@ def handle_fn(uid):
         if status is not 'success':
             raise Exception('User not saved')
         steps = get_steps(r['purpose'])
-        return Response(response=json.dumps(steps), status=200)
+        return Response(response=json.dumps(steps), status=200, mimetype="application/json")
     except Exception as e:
         return Response('{"error":"' + str(e) + '"}', status=400)
 
@@ -79,7 +80,7 @@ def handle_done(uid):
         result = success_q_to_res(uid)
         if not result:
             raise Exception('No response from logic')
-        return Response(response=json.dumps(result), status=200)
+        return Response(response=json.dumps(result), status=200, mimetype="application/json")
     except Exception as e:
         return Response('{"error":"' + str(e) + '"}', status=400)
 
@@ -89,12 +90,13 @@ def handle_done(uid):
 def check_query():
     query_data = request.form
     print(query_data)
-    role = int(query_data['role'])
-    query = query_data['query'].split(',')
+    query_data = query_data.to_dict(flat=False)
+    role = int(query_data['role'][0])
+    query = query_data['query'][0].split(',')
     for index in range(0, len(query)):
         query[index] = int(query[index])
     query = [0] + query
-    user = int(query_data['user'])
+    user = 0
     timestamp = date.today()
     transaction = [role, user, timestamp, query]
     print(transaction)
@@ -106,4 +108,4 @@ if __name__ == '__main__':
     job = threading.Thread(target=job_q_to_qms, args=())
     job.daemon = True
     job.start()
-    app.run(host='127.0.0.1', port='5000', debug=True)
+    app.run(host='192.168.43.50', port='5000', debug=True)
