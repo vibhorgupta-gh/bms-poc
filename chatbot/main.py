@@ -41,6 +41,6 @@ async def parse(text: Text):
 
 
 if __name__ == '__main__':
-    port = int(os.getenv('PORT', 8080))
+    port = int(os.getenv('PORT', 8000))
     print("Starting app on port %d" % port)
-    app.run(debug=False, port=port, host='127.0.0.1')
+    app.run(debug=False, port=port, host='192.168.43.13')
