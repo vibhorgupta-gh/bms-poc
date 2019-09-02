@@ -1,31 +1,41 @@
-<!DOCTYPE html>
-<html lang="en" dir="ltr">
-  <head>
-    <meta charset="utf-8">
-    <title></title>
-  </head>
-  <body>
-    <h1> Welcome, {{ user.name }}! </h1>
-    <h3> You have {{ user.role }} access </h3>
-    <form action="/logout" method="get">
-      <button> Logout </button>
-    </form>
-    <div>
-      <form action="/checker" method="post">
-        <div>
-          <label>
-            Query:
-          </label>
-          <input type="text" name="query" required>
+<link href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+<script src="//netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script>
+<script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+<link href="./public/css/dashboard.css" rel="stylesheet">
+<!------ Include the above in your HEAD tag ---------->
 
-          <label>
-            Role:
-          </label>
-          <input type="text" name="role" value={{user.role}}>
-
+<div class="row jumbotron vertical-center-row">
+  <h1 style="font-size:40px;" align="center">Dashboard</h1>
+  <p class="lead" align="center"><i class="fa fa-list"></i>  Welcome {{ user.name }}
+    <br>
+  <p class="lead" align="center"><i class="fa fa-list"></i> You have {{ user.role }} access
+  <div class="row">
+    <!-- Spacer -->
+    <div class="col-md-2 " style="background-color:lavender;"></div>
+    <div class="col-md-4">
+      <div class="panel panel-default panel-cust" style="width:100%;">
+        <div class="panel-body panel-updated">
+          <h4 class="desc">Fraud Detected</h4>
+          <h4 class="desc">Transaction ID : {{ transaction.id }}</h4>
         </div>
-        <button>Submit Query</button>
+      </div>
+    </div>
+
+
+    <div class="col-md-4">
+      <div class="panel panel-default panel-cust" style="width:100%;">
+        <div class="panel-body panel-updated">
+          <h4 class="desc">High priority user Detected</h4>
+          <h4 class="desc">Employee ID : {{ Employee.id }}</h4>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="text-center" , style="margin-top :2%">
+      <form action="/logout" method="get">
+        <button id="singlebutton" name="singlebutton" class="btn btn-primary">Logout</button>
       </form>
     </div>
-  </body>
-</html>
+  </div>
+</div>
