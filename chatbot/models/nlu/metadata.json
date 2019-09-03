@@ -83,6 +83,6 @@
         }
     ],
     "training_data": "training_data.json",
-    "trained_at": "20190830-140726",
+    "trained_at": "20190903-145342",
     "rasa_version": "1.2.5"
 }

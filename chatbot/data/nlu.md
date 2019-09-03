@@ -1,8 +1,8 @@
-## intent:greet
-- Hi
-- Hey
-- Hello
-
+## intent:bye
+- No, I am good as of now. Bye.
+- Bye.
+- Bbye.
+- login nhi ho rha
 
 ## intent:complaint
 - I would like to register a complaint.
@@ -16,6 +16,18 @@
 - [service charges](category)
 - [internet banking](category)
 - [card transactions](category)
+- Register a complaint about [loan](category)
+- Register a complaint about [net banking](category)
+
+## intent:greet
+- Hi
+- Hey
+- Hello
+
+## intent:thanks
+- Thanks.
+- Thank you so much.
+- Thanks for your help.
 
 ## intent:track
 - I would like to track a complaint.
@@ -27,15 +39,5 @@
 - [195](tracking_id)
 - [798](tracking_id)
 - [446](tracking_id)
-
-
-
-## intent:thanks
-- Thanks.
-- Thank you so much.
-- Thanks for your help.
-
-## intent:bye
-- No, I am good as of now. Bye.
-- Bye.
-- Bbye.
+- track a complaint
+- [318](tracking_id)
