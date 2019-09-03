@@ -178,6 +178,54 @@
         "text": "unable to get loan"
       },
       {
+        "intent": "complaint",
+        "text": "unable to do transactions"
+      },
+      {
+        "intent": "complaint",
+        "text": "register another complaint"
+      },
+      {
+        "intent": "complaint",
+        "text": "unable to login to my account."
+      },
+      {
+        "intent": "complaint",
+        "text": "I am unable to login to my bank account. Can you help me reset my password?"
+      },
+      {
+        "intent": "complaint",
+        "entities": [
+          {
+            "start": 27,
+            "end": 32,
+            "value": "loans",
+            "entity": "category"
+          }
+        ],
+        "text": "register a complaint about loans"
+      },
+      {
+        "intent": "complaint",
+        "text": "Register another complaint for me"
+      },
+      {
+        "intent": "complaint",
+        "text": "register another complaint for me."
+      },
+      {
+        "intent": "complaint",
+        "entities": [
+          {
+            "start": 0,
+            "end": 18,
+            "value": "cheques and drafts",
+            "entity": "category"
+          }
+        ],
+        "text": "Cheques and Drafts"
+      },
+      {
         "intent": "greet",
         "text": "Hi"
       },
@@ -296,10 +344,29 @@
       {
         "intent": "track",
         "text": "Track another complaint."
+      },
+      {
+        "intent": "track",
+        "text": "I believe the service charges for my last transactions are too high. I would like to have a word with the manager."
+      },
+      {
+        "intent": "track",
+        "text": "I am unable to process my loan papers."
+      },
+      {
+        "intent": "track",
+        "text": "My last cheque just bounced. I believe that is a mistake."
       }
     ],
     "regex_features": [],
     "lookup_tables": [],
-    "entity_synonyms": []
+    "entity_synonyms": [
+      {
+        "value": "cheques and drafts",
+        "synonyms": [
+          "Cheques and Drafts"
+        ]
+      }
+    ]
   }
 }

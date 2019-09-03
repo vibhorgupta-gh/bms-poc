@@ -21,6 +21,14 @@
 - Register a complaint about [net banking](category)
 - register a complaint.
 - unable to get [loan](category)
+- unable to do transactions
+- register another complaint
+- unable to login to my account.
+- I am unable to login to my bank account. Can you help me reset my password?
+- register a complaint about [loans](category)
+- Register another complaint for me
+- register another complaint for me.
+- [Cheques and Drafts](category:cheques and drafts)
 
 ## intent:greet
 - Hi
@@ -47,3 +55,6 @@
 - [318](tracking_id)
 - Track another complaint for me.
 - Track another complaint.
+- I believe the service charges for my last transactions are too high. I would like to have a word with the manager.
+- I am unable to process my loan papers.
+- My last cheque just bounced. I believe that is a mistake.

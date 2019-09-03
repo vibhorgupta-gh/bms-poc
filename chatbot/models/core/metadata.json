@@ -5,8 +5,8 @@
     },
     "complaint_form": {
       "slots": [
-        "complaint_text",
         "category",
+        "complaint_text",
         "requested_slot"
       ]
     },
@@ -16,10 +16,10 @@
         "requested_slot"
       ]
     },
-    "action_restart": {
+    "utter_greet": {
       "slots": []
     },
-    "utter_greet": {
+    "action_restart": {
       "slots": []
     }
   },
@@ -37,7 +37,7 @@
     "rasa.core.policies.fallback.FallbackPolicy",
     "rasa.core.policies.form_policy.FormPolicy"
   ],
-  "trained_at": "20190903-171837",
+  "trained_at": "20190903-181841",
   "rasa": "1.2.5",
   "tensorflow": "1.13.2",
   "sklearn": "0.20.4"
