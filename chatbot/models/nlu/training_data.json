@@ -27,6 +27,10 @@
       },
       {
         "intent": "complaint",
+        "text": "Register another complaint."
+      },
+      {
+        "intent": "complaint",
         "entities": [
           {
             "start": 43,
@@ -158,6 +162,22 @@
         "text": "Register a complaint about net banking"
       },
       {
+        "intent": "complaint",
+        "text": "register a complaint."
+      },
+      {
+        "intent": "complaint",
+        "entities": [
+          {
+            "start": 14,
+            "end": 18,
+            "value": "loan",
+            "entity": "category"
+          }
+        ],
+        "text": "unable to get loan"
+      },
+      {
         "intent": "greet",
         "text": "Hi"
       },
@@ -180,6 +200,10 @@
       {
         "intent": "thanks",
         "text": "Thanks for your help."
+      },
+      {
+        "intent": "thanks",
+        "text": "Thank you."
       },
       {
         "intent": "track",
@@ -264,6 +288,14 @@
           }
         ],
         "text": "318"
+      },
+      {
+        "intent": "track",
+        "text": "Track another complaint for me."
+      },
+      {
+        "intent": "track",
+        "text": "Track another complaint."
       }
     ],
     "regex_features": [],

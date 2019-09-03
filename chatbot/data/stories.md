@@ -27,7 +27,7 @@
 - utter_bye
 - action_restart
 
-## New Story
+## Interactive story-1
 
 * greet
     - utter_greet
@@ -46,8 +46,9 @@
     - form{"name":null}
     - slot{"requested_slot":null}
     - utter_confirmation
+    - action_restart
 
-## New Story
+## Interactive story-2
 
 * complaint
     - complaint_form
@@ -64,8 +65,9 @@
     - form{"name":null}
     - slot{"requested_slot":null}
     - utter_confirmation
+    - action_restart
 
-## New Story
+## Interactive story-3
 
 * track
     - tracking_form
@@ -88,3 +90,4 @@
     - slot{"tracking_id":"318"}
     - form{"name":null}
     - slot{"requested_slot":null}
+    - action_restart

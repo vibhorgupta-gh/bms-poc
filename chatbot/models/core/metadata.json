@@ -3,21 +3,18 @@
     "action_listen": {
       "slots": []
     },
-    "tracking_form": {
-      "slots": [
-        "requested_slot",
-        "tracking_id"
-      ]
-    },
     "complaint_form": {
       "slots": [
+        "complaint_text",
         "category",
-        "requested_slot",
-        "complaint_text"
+        "requested_slot"
       ]
     },
-    "utter_confirmation": {
-      "slots": []
+    "tracking_form": {
+      "slots": [
+        "tracking_id",
+        "requested_slot"
+      ]
     },
     "action_restart": {
       "slots": []
@@ -40,7 +37,7 @@
     "rasa.core.policies.fallback.FallbackPolicy",
     "rasa.core.policies.form_policy.FormPolicy"
   ],
-  "trained_at": "20190903-145318",
+  "trained_at": "20190903-171837",
   "rasa": "1.2.5",
   "tensorflow": "1.13.2",
   "sklearn": "0.20.4"
