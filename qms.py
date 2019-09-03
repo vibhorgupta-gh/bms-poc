@@ -86,8 +86,40 @@ def success_q_to_res(uid):
             continue
         elif success_q[0][0].uid is uid:
             response = [success_q[0][0].uid, success_q[0][1], success_q[0][2]]
+            save_result(response)
             success_q.pop(0)
             return response
+
+
+def save_result(response):
+    try:
+        res_dict = dict()
+        res_dict[str(response[0])] = response
+        with open('poller_response.pkl', 'wb') as poller_response:
+            pickle.dump(res_dict)
+    except Exception as e:
+        print(str(e))
+
+
+def check_result(uid, counter):
+    try:
+        res_dict = dict()
+        with open('poller_response.pkl', 'wb') as poller_response:
+            res_dict = pickle.load(poller_response)
+
+        compare_obj = res_dict[str(uid)]
+        final_res = dict()
+        if compare_obj[1] != counter:
+            final_res['counter'] = compare_obj[1]
+            final_res['index'] = compare_obj[2]
+            return {
+                'msg': 'changed',
+                'res': final_res
+            }
+    except Exception as e:
+        return {
+            'msg': str(e)
+        }
 
 
 def save_user(uid, purpose, priority):

@@ -1,5 +1,5 @@
 from flask import Flask, request, Response, json, render_template, redirect, jsonify
-from qms import User, save_user, get_steps, enqueue_job, success_q_to_res, signup, login_helper, job_q_to_qms
+from qms import User, save_user, get_steps, enqueue_job, success_q_to_res, signup, login_helper, job_q_to_qms, check_result
 from fraud.query_checker import checker
 from datetime import date
 import threading
@@ -58,6 +58,21 @@ def logout():
 
 
 # business logic endpoints
+@app.route('/poll', methods=['POST'])
+def poller():
+    try:
+        # import ipdb; ipdb.set_trace()
+        r = request.get_json()
+        uid, counter, idx = r['uid'], r['counter'], r['index']
+        result = check_result(uid, counter)
+        if result['msg'] == 'changed':
+            return Response(response=json.dumps(result['res'], status=200, mimetype="application/json"))
+        return Response(response=json.dumps('unchanged'), status=200)
+    except Exception as e:
+        print(str(e))
+        return Response('{"error":"' + str(e) + '"}', status=400)
+
+
 @app.route('/fn/<string:uid>', methods=['POST'])
 def handle_fn(uid):
     try:
