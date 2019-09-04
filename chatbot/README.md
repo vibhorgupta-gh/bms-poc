@@ -1,8 +1,9 @@
 # Install Dependencies
-1.) pip install rasa <br />
-2.) pip install rasa[spacy] <br />
-3.) python -m spacy download en_core_web_md <br />
-4.) python -m spacy link en_core_web_md en <br />
+1.) conda install -c conda-forge httptools
+2.) conda install -c conda-forge spacy
+3.) pip install rasa[spacy] <br />
+4.) python -m spacy download en_core_web_md <br />
+5.) python -m spacy link en_core_web_md en <br />
 # Run
 5.) rasa run actions& (In separate cmd) <br />
 6.) python main.py <br />
