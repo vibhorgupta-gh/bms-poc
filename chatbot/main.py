@@ -1,10 +1,13 @@
+import warnings
+
+warnings.filterwarnings('ignore', category=FutureWarning)
 from flask import Flask, request
 from flask_cors import CORS
 from rasa.utils.endpoints import EndpointConfig
 from rasa.core.agent import Agent
 import asyncio
 import os
-from typing import Dict, Text, Any, List, Union, Optional
+from typing import Text
 
 app = Flask(__name__)
 app.secret_key = ''

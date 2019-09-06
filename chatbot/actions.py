@@ -1,3 +1,6 @@
+import warnings
+
+warnings.filterwarnings('ignore', category=FutureWarning)
 from rasa_sdk.forms import FormAction
 from typing import Dict, Text, Any, List, Union, Optional
 from rasa_sdk import Tracker
@@ -70,6 +73,9 @@ class TrackingForm(FormAction):
         abspath = pathlib.Path(filename).absolute()
         with open(str(abspath), 'rb') as handle:
             a = pickle.load(handle)
-        dispatcher.utter_message(
-            f"Category: {a[tracking_id][0]} \nComplaint : {a[tracking_id][1]} \nStatus: {a[tracking_id][2]}")
+        if tracking_id not in a:
+            dispatcher.utter_message(f"Please enter a valid Tracking ID : f{a}")
+        else:
+            dispatcher.utter_message(
+                f"Category: {a[tracking_id][0]} \nComplaint : {a[tracking_id][1]} \nStatus: {a[tracking_id][2]}")
         return []

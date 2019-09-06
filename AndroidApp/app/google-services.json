@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "84268040822",
+    "firebase_url": "https://synd-82a2b.firebaseio.com",
+    "project_id": "synd-82a2b",
+    "storage_bucket": "synd-82a2b.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:84268040822:android:a237d1bdf21d698e",
+        "android_client_info": {
+          "package_name": "com.example.uday_vig.synd"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "84268040822-nlg7np4d15jufevh8modi5f8dsh2oq7a.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.uday_vig.synd",
+            "certificate_hash": "0785319edc9f6d16ef3de69059f7a30f1ded727b"
+          }
+        },
+        {
+          "client_id": "84268040822-eieui718q9i7m3bqegrbuke91agup5rl.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAuxyyM-_CDddMIi3RgcG0eRAbWPAT6-HA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "84268040822-eieui718q9i7m3bqegrbuke91agup5rl.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

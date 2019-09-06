@@ -2,16 +2,20 @@
   "rasa_nlu_data": {
     "common_examples": [
       {
-        "intent": "greet",
-        "text": "Hi"
+        "intent": "bye",
+        "text": "No, I am good as of now. Bye."
       },
       {
-        "intent": "greet",
-        "text": "Hey"
+        "intent": "bye",
+        "text": "Bye."
       },
       {
-        "intent": "greet",
-        "text": "Hello"
+        "intent": "bye",
+        "text": "Bbye."
+      },
+      {
+        "intent": "bye",
+        "text": "login nhi ho rha"
       },
       {
         "intent": "complaint",
@@ -20,6 +24,10 @@
       {
         "intent": "complaint",
         "text": "Register a complaint."
+      },
+      {
+        "intent": "complaint",
+        "text": "Register another complaint."
       },
       {
         "intent": "complaint",
@@ -130,6 +138,122 @@
         "text": "card transactions"
       },
       {
+        "intent": "complaint",
+        "entities": [
+          {
+            "start": 27,
+            "end": 31,
+            "value": "loan",
+            "entity": "category"
+          }
+        ],
+        "text": "Register a complaint about loan"
+      },
+      {
+        "intent": "complaint",
+        "entities": [
+          {
+            "start": 27,
+            "end": 38,
+            "value": "net banking",
+            "entity": "category"
+          }
+        ],
+        "text": "Register a complaint about net banking"
+      },
+      {
+        "intent": "complaint",
+        "text": "register a complaint."
+      },
+      {
+        "intent": "complaint",
+        "entities": [
+          {
+            "start": 14,
+            "end": 18,
+            "value": "loan",
+            "entity": "category"
+          }
+        ],
+        "text": "unable to get loan"
+      },
+      {
+        "intent": "complaint",
+        "text": "unable to do transactions"
+      },
+      {
+        "intent": "complaint",
+        "text": "register another complaint"
+      },
+      {
+        "intent": "complaint",
+        "text": "unable to login to my account."
+      },
+      {
+        "intent": "complaint",
+        "text": "I am unable to login to my bank account. Can you help me reset my password?"
+      },
+      {
+        "intent": "complaint",
+        "entities": [
+          {
+            "start": 27,
+            "end": 32,
+            "value": "loans",
+            "entity": "category"
+          }
+        ],
+        "text": "register a complaint about loans"
+      },
+      {
+        "intent": "complaint",
+        "text": "Register another complaint for me"
+      },
+      {
+        "intent": "complaint",
+        "text": "register another complaint for me."
+      },
+      {
+        "intent": "complaint",
+        "entities": [
+          {
+            "start": 0,
+            "end": 18,
+            "value": "cheques and drafts",
+            "entity": "category"
+          }
+        ],
+        "text": "Cheques and Drafts"
+      },
+      {
+        "intent": "greet",
+        "text": "Hi"
+      },
+      {
+        "intent": "greet",
+        "text": "Hey"
+      },
+      {
+        "intent": "greet",
+        "text": "Hello"
+      },
+      {
+        "intent": "thanks",
+        "text": "Thanks."
+      },
+      {
+        "intent": "thanks",
+        "text": "Thank you so much."
+      },
+      {
+        "intent": "thanks",
+        "text": "Thanks for your help."
+      },
+      {
+        "intent": "thanks",
+        "text": "Thank you."
+      },
+      {
         "intent": "track",
         "text": "I would like to track a complaint."
       },
@@ -198,32 +322,51 @@
         "text": "446"
       },
       {
-        "intent": "thanks",
-        "text": "Thanks."
+        "intent": "track",
+        "text": "track a complaint"
       },
       {
-        "intent": "thanks",
-        "text": "Thank you so much."
+        "intent": "track",
+        "entities": [
+          {
+            "start": 0,
+            "end": 3,
+            "value": "318",
+            "entity": "tracking_id"
+          }
+        ],
+        "text": "318"
       },
       {
-        "intent": "thanks",
-        "text": "Thanks for your help."
+        "intent": "track",
+        "text": "Track another complaint for me."
       },
       {
-        "intent": "bye",
-        "text": "No, I am good as of now. Bye."
+        "intent": "track",
+        "text": "Track another complaint."
       },
       {
-        "intent": "bye",
-        "text": "Bye."
+        "intent": "track",
+        "text": "I believe the service charges for my last transactions are too high. I would like to have a word with the manager."
       },
       {
-        "intent": "bye",
-        "text": "Bbye."
+        "intent": "track",
+        "text": "I am unable to process my loan papers."
+      },
+      {
+        "intent": "track",
+        "text": "My last cheque just bounced. I believe that is a mistake."
       }
     ],
     "regex_features": [],
     "lookup_tables": [],
-    "entity_synonyms": []
+    "entity_synonyms": [
+      {
+        "value": "cheques and drafts",
+        "synonyms": [
+          "Cheques and Drafts"
+        ]
+      }
+    ]
   }
 }

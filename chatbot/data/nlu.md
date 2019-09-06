@@ -1,12 +1,13 @@
-## intent:greet
-- Hi
-- Hey
-- Hello
-
+## intent:bye
+- bye.
+- Bye.
+- Bbye.
+- bye bye.
 
 ## intent:complaint
 - I would like to register a complaint.
 - Register a complaint.
+- Register another complaint.
 - I would like to register a complaint about [cheques and drafts](category).
 - I would like to register a complaint about [internet banking](category).
 - Register a complaint about [service charges](category).
@@ -16,6 +17,28 @@
 - [service charges](category)
 - [internet banking](category)
 - [card transactions](category)
+- Register a complaint about [loan](category)
+- Register a complaint about [net banking](category)
+- register a complaint.
+- register another complaint
+- register a complaint about [loans](category)
+- Register another complaint for me
+- register another complaint for me.
+
+## intent:greet
+- Hi
+- Hey
+- Hello
+- hi
+- hello
+- hey
+
+## intent:thanks
+- Thanks.
+- Thank you so much.
+- Thanks for your help.
+- Thank you.
+- thanks
 
 ## intent:track
 - I would like to track a complaint.
@@ -27,15 +50,7 @@
 - [195](tracking_id)
 - [798](tracking_id)
 - [446](tracking_id)
-
-
-
-## intent:thanks
-- Thanks.
-- Thank you so much.
-- Thanks for your help.
-
-## intent:bye
-- No, I am good as of now. Bye.
-- Bye.
-- Bbye.
+- track a complaint
+- [318](tracking_id)
+- Track another complaint for me.
+- Track another complaint.
