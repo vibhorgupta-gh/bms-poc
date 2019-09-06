@@ -1,3 +1,6 @@
+import warnings
+
+warnings.filterwarnings('ignore', category=FutureWarning)
 from rasa_sdk.forms import FormAction
 from typing import Dict, Text, Any, List, Union, Optional
 from rasa_sdk import Tracker
