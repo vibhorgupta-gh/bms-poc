@@ -9,6 +9,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
@@ -34,6 +35,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.UnsupportedEncodingException;
+import java.util.ArrayList;
 
 public class PurposeActivity extends AppCompatActivity  {
 
@@ -44,6 +46,8 @@ public class PurposeActivity extends AppCompatActivity  {
     Spinner purposeSpinner;
     String[] purpose;
     boolean ini = true;
+
+    ArrayList<String> al = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -72,8 +76,7 @@ public class PurposeActivity extends AppCompatActivity  {
 
                     if(idx != 0){
                         Log.e("YOLO", "onItemSelected: " + idx + " " + selected);
-                        //TODO: Send this selection to server using POST request
-                        //TODO: Retrieve user details and send them to server using POST
+
                         DatabaseReference databaseReference = firebaseDatabase.getReference("users/" + firebaseUser.getUid() + "/");
                         databaseReference.addValueEventListener(new ValueEventListener() {
                             @Override
@@ -81,7 +84,6 @@ public class PurposeActivity extends AppCompatActivity  {
                                 User details = dataSnapshot.getValue(User.class);
                                 Log.e("YOLO", "onDataChange: " + details.email);
 
-                                //TODO Cont: POST here
                                 try {
                                     RequestQueue requestQueue = Volley.newRequestQueue(PurposeActivity.this);
                                     String URL = "http://192.168.43.50:5000/fn/" + details.id;
@@ -117,19 +119,37 @@ public class PurposeActivity extends AppCompatActivity  {
                                         }
 
                                         @Override
-                                        protected Response<String> parseNetworkResponse(NetworkResponse response) {
+                                        protected Response<String> parseNetworkResponse(final NetworkResponse response) {
                                             String responseString = "";
                                             if (response != null) {
-                                                try {
-                                                    String str = new String(response.data, "UTF-8");
-                                                    Log.e("YOLO", "parseNetworkResponse: " + str);
-                                                    JSONArray obj = new JSONArray(str);
-                                                    //TODO: Show counters from received response
-                                                } catch (UnsupportedEncodingException e) {
-                                                    e.printStackTrace();
-                                                } catch (JSONException e) {
-                                                    e.printStackTrace();
-                                                }
+
+                                                runOnUiThread(new Runnable() {
+                                                    @Override
+                                                    public void run() {
+                                                        try {
+                                                            String str = new String(response.data, "UTF-8");
+                                                            Log.e("YOLO", "parseNetworkResponse: " + str);
+                                                            JSONArray arr = new JSONArray(str);
+                                                            for(int i = 0; i < arr.length(); i++){
+                                                                try {
+                                                                    al.add(arr.getString(i));
+                                                                } catch (JSONException e) {
+                                                                    e.printStackTrace();
+                                                                }
+                                                            }
+
+                                                            Intent intent = new Intent(PurposeActivity.this, FunctionsActivity.class);
+                                                            intent.putExtra("PURPOSE", selected);
+                                                            intent.putStringArrayListExtra("counter", al);
+                                                            Log.e("YOLO", "onItemSelected: " + al);
+                                                            startActivity(intent);
+                                                        } catch (UnsupportedEncodingException e) {
+                                                            e.printStackTrace();
+                                                        } catch (JSONException e) {
+                                                            e.printStackTrace();
+                                                        }
+                                                    }
+                                                });
                                             }
                                             return Response.success(responseString, HttpHeaderParser.parseCacheHeaders(response));
                                         }
@@ -147,9 +167,6 @@ public class PurposeActivity extends AppCompatActivity  {
                             }
                         });
                         Toast.makeText(PurposeActivity.this, selected, Toast.LENGTH_LONG).show();
-                        Intent intent = new Intent(PurposeActivity.this, CounterActivity.class);
-                        intent.putExtra("PURPOSE", selected);
-                        startActivity(intent);
                     }
                 }else{
                     ini = false;
