@@ -1,12 +1,15 @@
 package com.example.uday_vig.synd;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
@@ -32,6 +35,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.UnsupportedEncodingException;
+import java.util.ArrayList;
 
 public class CounterActivity extends AppCompatActivity {
 
@@ -39,7 +43,7 @@ public class CounterActivity extends AppCompatActivity {
     FirebaseAuth firebaseAuth;
     FirebaseUser firebaseUser;
 
-    Button okBtn;
+    TextView currCounterTextView, queueTextView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,87 +54,116 @@ public class CounterActivity extends AppCompatActivity {
         firebaseAuth = FirebaseAuth.getInstance();
         firebaseUser = firebaseAuth.getCurrentUser();
 
-        okBtn = findViewById(R.id.okButton);
+        currCounterTextView = findViewById(R.id.currCounterTextView);
+        queueTextView = findViewById(R.id.queueTextView);
 
         final String purpose = getIntent().getExtras().getString("PURPOSE");
+        final ArrayList<String> functions = getIntent().getExtras().getStringArrayList("counters");
 
-        okBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                DatabaseReference databaseReference = firebaseDatabase.getReference("users/" + firebaseUser.getUid() + "/");
-                databaseReference.addValueEventListener(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(DataSnapshot dataSnapshot) {
-                        User details = dataSnapshot.getValue(User.class);
-                        Log.e("YOLO", "onDataChange: " + details.email);
+        currCounterTextView.append(functions.get(1));
+        queueTextView.append(functions.get(2));
 
-                        //TODO Cont: POST here
-                        try {
-                            RequestQueue requestQueue = Volley.newRequestQueue(CounterActivity.this);
-                            String URL = "http://192.168.43.50:5000/done/" + details.id;
-                            JSONObject jsonBody = new JSONObject();
-                            jsonBody.put("purpose", purpose);
-                            jsonBody.put("priority", details.priority);
-                            final String requestBody = jsonBody.toString();
+        final Handler handler = new Handler();
+        final int delay = 2000;
 
-                            StringRequest stringRequest = new StringRequest(Request.Method.POST, URL, new Response.Listener<String>() {
-                                @Override
-                                public void onResponse(String response) {
-                                    Log.i("VOLLEY", response);
-                                }
-                            }, new Response.ErrorListener() {
-                                @Override
-                                public void onErrorResponse(VolleyError error) {
-                                    Log.e("VOLLEY", error.toString());
-                                }
-                            }) {
-                                @Override
-                                public String getBodyContentType() {
-                                    return "application/json; charset=utf-8";
-                                }
+        final DatabaseReference databaseReference = firebaseDatabase.getReference("users/" + firebaseUser.getUid() + "/");
+        databaseReference.child("counter").setValue(functions.get(1));
+        databaseReference.child("index").setValue(functions.get(2));
 
-                                @Override
-                                public byte[] getBody() throws AuthFailureError {
-                                    try {
-                                        return requestBody == null ? null : requestBody.getBytes("utf-8");
-                                    } catch (UnsupportedEncodingException uee) {
-                                        VolleyLog.wtf("Unsupported Encoding while trying to get the bytes of %s using %s", requestBody, "utf-8");
-                                        return null;
-                                    }
-                                }
+         handler.postDelayed(new Runnable() {
+             @Override
+             public void run() {
+                 try {
+                     RequestQueue requestQueue = Volley.newRequestQueue(CounterActivity.this);
+                     String URL = "http://192.168.43.50:5000/poll";
 
-                                @Override
-                                protected Response<String> parseNetworkResponse(NetworkResponse response) {
-                                    String responseString = "";
-                                    if (response != null) {
-                                        try {
-                                            String str = new String(response.data, "UTF-8");
-                                            Log.e("YOLO", "parseNetworkResponse: " + str);
-                                            JSONArray obj = new JSONArray(str);
+                     JSONObject jsonBody = new JSONObject();
+                     jsonBody.put("uid", firebaseUser.getUid());
+                     /*jsonBody.put("counter", functions.get(1));
+                     jsonBody.put("index", functions.get(2));*/
+                     final String requestBody = jsonBody.toString();
 
-                                        } catch (UnsupportedEncodingException e) {
-                                            e.printStackTrace();
-                                        } catch (JSONException e) {
-                                            e.printStackTrace();
-                                        }
-                                    }
-                                    return Response.success(responseString, HttpHeaderParser.parseCacheHeaders(response));
-                                }
-                            };
+                     StringRequest stringRequest = new StringRequest(Request.Method.POST, URL, new Response.Listener<String>() {
+                         @Override
+                         public void onResponse(String response) {
+                             Log.i("VOLLEY", response);
+                         }
+                     }, new Response.ErrorListener() {
+                         @Override
+                         public void onErrorResponse(VolleyError error) {
+                             Log.e("VOLLEY", error.toString());
+                         }
+                     }) {
+                         @Override
+                         public String getBodyContentType() {
+                             return "application/json; charset=utf-8";
+                         }
 
-                            requestQueue.add(stringRequest);
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
-                    }
+                         @Override
+                         public byte[] getBody() throws AuthFailureError {
+                             try {
+                                 return requestBody == null ? null : requestBody.getBytes("utf-8");
+                             } catch (UnsupportedEncodingException uee) {
+                                 VolleyLog.wtf("Unsupported Encoding while trying to get the bytes of %s using %s", requestBody, "utf-8");
+                                 return null;
+                             }
+                         }
 
-                    @Override
-                    public void onCancelled(DatabaseError databaseError) {
+                         @Override
+                         protected Response<String> parseNetworkResponse(NetworkResponse response) {
+                             String responseString = "";
+                             if (response != null) {
+                                 try {
+                                     String str = new String(response.data, "UTF-8");
+                                     //Log.e("YOLO", "parseNetworkResponse: " + str);
+                                     JSONArray arr = new JSONArray(str);
+                                     final String recCounter = arr.getString(1);
+                                     final String recIndex = arr.getString(2);
 
-                    }
-                });
-                startActivity(new Intent(CounterActivity.this, HomeActivity.class));
-            }
-        });
+                                     Log.e("YOLO", "parseNetworkResponse: " + recCounter + " " + recIndex);
+                                     final DatabaseReference databaseReference = firebaseDatabase.getReference("users/" + firebaseUser.getUid() + "/");
+                                     databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
+                                         @Override
+                                         public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                             String counter = dataSnapshot.child("counter").getValue(String.class);
+                                             String index = dataSnapshot.child("index").getValue(String.class);
+
+                                             if(!counter.equals(recCounter)){
+                                                 runOnUiThread(new Runnable() {
+                                                     @Override
+                                                     public void run() {
+                                                         currCounterTextView.setText("You are currently at counter: " + recCounter);
+                                                         queueTextView.setText("Please proceed to queue number: " + recIndex);
+                                                     }
+                                                 });
+
+                                                 databaseReference.child("counter").setValue(recCounter);
+                                                 databaseReference.child("index").setValue(recIndex);
+                                             }
+                                         }
+
+                                         @Override
+                                         public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                                         }
+                                     });
+                                 } catch (UnsupportedEncodingException e) {
+                                     Log.e("YOLO", "parseNetworkResponse: " + e.getMessage());
+                                 } catch (JSONException e) {
+                                     Log.e("YOLO", "parseNetworkResponse: " + e.getMessage());
+                                 }
+                             }
+                             return Response.success(responseString, HttpHeaderParser.parseCacheHeaders(response));
+                         }
+                     };
+
+                     requestQueue.add(stringRequest);
+                 } catch (JSONException e) {
+                     e.printStackTrace();
+                 }
+
+                 handler.postDelayed(this, delay);
+             }
+         }, delay);
     }
 }

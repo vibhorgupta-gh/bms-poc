@@ -64,7 +64,7 @@ public class LoginActivity extends AppCompatActivity {
                     @Override
                     public void onFailure(@NonNull Exception e) {
                         progressDialog.dismiss();
-                        Toast.makeText(LoginActivity.this, "Email or password incorrect", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(LoginActivity.this, "Email or password incorrect" + e.getMessage(), Toast.LENGTH_SHORT).show();
                     }
                 });
             }

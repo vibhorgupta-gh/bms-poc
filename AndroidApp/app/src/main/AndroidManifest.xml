@@ -30,7 +30,9 @@
         <activity android:name=".HomeActivity" />
         <activity android:name=".VoiceActivity" />
         <activity android:name=".PurposeActivity" />
-        <activity android:name=".CounterActivity"></activity>
+        <activity android:name=".CounterActivity" >
+        </activity>
+        <activity android:name=".FunctionsActivity"></activity>
     </application>
 
 </manifest>

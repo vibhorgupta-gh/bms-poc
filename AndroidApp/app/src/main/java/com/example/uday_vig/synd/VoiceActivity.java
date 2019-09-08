@@ -108,7 +108,6 @@ public class VoiceActivity extends AppCompatActivity {
                     //messageAdapter.setMessagesList(messageList);
                     messageAdapter.notifyDataSetChanged();
                     Log.e("YOLO", "onActivityResult: " + list.get(0));
-                    //TODO: Send string to server using POST request
 
                     try {
                         RequestQueue requestQueue = Volley.newRequestQueue(this);
@@ -156,7 +155,12 @@ public class VoiceActivity extends AppCompatActivity {
 
                                         messageList.add(temp);
                                         //messageAdapter.setMessagesList(messageList);
-                                        messageAdapter.notifyDataSetChanged();
+                                        runOnUiThread(new Runnable() {
+                                            @Override
+                                            public void run() {
+                                                messageAdapter.notifyDataSetChanged();
+                                            }
+                                        });
                                     } catch (UnsupportedEncodingException e) {
                                         e.printStackTrace();
                                     }
