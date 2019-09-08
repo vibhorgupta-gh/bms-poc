@@ -10,7 +10,7 @@ def send_whatsapp(message_body):
     message = client.messages \
         .create(
             from_='whatsapp:+14155238886',
-            to='whatsapp:+919999080157',
+            to='whatsapp:+919560741339',
             body=message_body
         )
     print(message.sid)
@@ -21,14 +21,15 @@ def send_whatsapp(message_body):
 
 
 def send_SMS(contact_no, code):
-    account_sid = 'AC1e3aaab55f7140eade64339494308923'
-    auth_token = '52c7e8be5c0a17e91736b1ce9e2f9c44'
+    account_sid = 'AC2e99fc3447e5740829859bea69a67b7b'
+    auth_token = 'd15e347f4d5e039a21fea110bf511b11'
+
     client = Client(account_sid, auth_token)
 
     message = client.messages \
         .create(
-            from_='+12056196869',
-            to=f'+919810660617',
+            from_='+12055641962',
+            to='+919560741339',
             body=code
         )
     print(message.sid)
@@ -36,7 +37,6 @@ def send_SMS(contact_no, code):
 
 def generate_otp(contact_no):
     try:
-        # import ipdb; ipdb.set_trace()
         otp = ''
         for x in range(6):
             otp = otp + str(random.randint(1,9))
