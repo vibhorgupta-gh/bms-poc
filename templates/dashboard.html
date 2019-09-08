@@ -20,16 +20,16 @@
       <div class="col-md-2 " style="background-color:lavender;"></div>
       <div class="col-md-4">
         <div class="panel panel-default panel-cust" style="width:100%;">
+          {% for transaction in user.transactions %}
           <div class="panel-body panel-updated">
             <h4 class="desc">Fraud Detected</h4>
-            {% for transaction in user.transactions %}
               <h6 class="desc">Role : {{ transaction.role }}</h6>
               <h6 class="desc">User : {{ transaction.user }}</h6>
               <h6 class="desc">Query : {{ transaction.query }}</h6>
               <h6 class="desc">Timestamp : {{ transaction.timestamp }}</h6>
               <h6 class="desc">Status : {{ transaction.status }}</h6>
-            {% endfor %}
           </div>
+          {% endfor %}
         </div>
       </div>
 

@@ -1,4 +1,4 @@
-import pickle, time
+import pickle, time, os
 
 job_q = list()
 success_q = list()
@@ -6,6 +6,7 @@ waiting_q = list()
 high_value_user_list = list()
 fraud_list = list()
 customer_limit = 1
+counter = 0
 
 def make_global():
     global job_q
@@ -14,6 +15,7 @@ def make_global():
     global customer_limit
     global high_value_user_list
     global fraud_list
+    global counter
 
 make_global()
 
@@ -93,50 +95,6 @@ def qms_to_success_q(user_object, counter, row):
     success_q.append((user_object, counter, row))
 
 
-# def search_and_put_from_waiting_q(counter_name):
-#     user, idx = dict(), -1
-#     for obj in waiting_q:
-#         if obj['counter_name'] == counter_name:
-#             user = obj
-#             dequeue_wait(obj)
-#             break
-#
-#     uid = user['uid']
-#
-#     # put the extracted user in next counter queue
-#     steps = {}
-#     with open('steps.pkl', 'rb') as step_store:
-#         steps = pickle.load(step_store)
-#
-#     step_object = steps[str(counter_name)]
-#     size, idx = 1000, -1
-#     for i in range(len(step_object.counters)):
-#         if len(step_object.counters[i]) <= size:
-#             size, idx = len(step_object.counters[i]), i
-#
-#
-#     step_object.counters[idx].append(user)
-#     steps[str(counter_name)] = step_object
-#
-#     with open('steps.pkl', 'wb') as step_store:
-#         pickle.dump(steps, step_store)
-#
-#     # save user state
-#     for step in purpose_object.steps:
-#         if step['visited'] is False:
-#             step['visited'] = True
-#             step['q_index'] = idx
-#             break
-#
-#     u_dict[str(user.uid)] = purpose_object
-#     with open('user_purpose.pkl', 'wb') as u_purpose:
-#         pickle.dump(u_dict, u_purpose)
-#
-#     #push to success_q
-#     qms_to_success_q(user, counter_name, idx)
-#     return 'success'
-
-
 def success_q_to_res(uid):
     while True:
         if len(success_q) == 0:
@@ -153,8 +111,9 @@ def save_result(response):
     try:
         res_dict = dict()
         res_dict[str(response[0])] = response
+        print(response)
         with open('poller_response.pkl', 'wb') as poller_response:
-            pickle.dump(res_dict)
+            pickle.dump(res_dict, poller_response)
     except Exception as e:
         print(str(e))
 
@@ -162,17 +121,12 @@ def save_result(response):
 def check_result(uid):
     try:
         res_dict = dict()
-        with open('poller_response.pkl', 'wb') as poller_response:
-            res_dict = pickle.load(poller_response)
+        result = list()
+        if os.path.getsize('poller_response.pkl') > 0:
+            with open('poller_response.pkl', 'rb') as poller_response:
+                res_dict = pickle.load(poller_response)
+            result = res_dict[str(uid)]
 
-        result = res_dict[str(uid)]
-        # if compare_obj[1] != counter:
-        #     final_res['counter'] = compare_obj[1]
-        #     final_res['index'] = compare_obj[2]
-        #     return {
-        #         'msg': 'changed',
-        #         'res': final_res
-        #     }
         return result
     except Exception as e:
         return {
@@ -182,7 +136,11 @@ def check_result(uid):
 
 def save_user(uid, purpose, priority):
     try:
-        if priority is 0:
+        global counter
+        if counter >= 1:
+            return 'success'
+
+        elif priority is 0:
             high_value_user_list.append(User(uid, purpose, priority))
 
         step_list = []
@@ -206,6 +164,7 @@ def save_user(uid, purpose, priority):
         with open('user_purpose.pkl', 'wb') as u_purpose:
             pickle.dump(u_dict, u_purpose)
 
+        counter = counter + 1
         return 'success'
     except Exception as e:
         return str(e)
@@ -293,10 +252,6 @@ def queue_manager(user):
                 return 'ghost customer'
 
             step_object.counters[prev_idx].pop(0)
-
-            # if len(step_object.counters[prev_idx]) < customer_limit:
-            #     search_and_put_from_waiting_q(step_object.name)
-
             steps[str(counter_name)] = step_object
 
             with open('steps.pkl', 'wb') as step_store:
@@ -314,6 +269,7 @@ def queue_manager(user):
                 for u in high_value_user_list:
                     if u.uid == user.uid:
                         high_value_user_list.remove(u)
+            # qms_to_success_q(user, 'Purpose fulfilled', -1)
             return 'Purpose fulfilled'
 
         # calculate and set in counter state
@@ -327,14 +283,6 @@ def queue_manager(user):
             if len(step_object.counters[i]) <= size:
                 size, idx = len(step_object.counters[i]), i
 
-        # if size > customer_limit:
-        #     wait_object = {
-        #         'uid': user,
-        #         'counter_name': counter_name
-        #     }
-        #     customer_in_waiting_q(wait_object)
-        #     return 'Wating'
-        # else:
         step_object.counters[idx].append(user)
         steps[str(counter_name)] = step_object
 

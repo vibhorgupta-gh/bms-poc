@@ -56,7 +56,7 @@ def login():
 @app.route('/logout', methods=['GET'])
 def logout():
     try:
-        return redirect('http://192.168.43.50:5000/login', code=302)
+        return redirect('http://192.168.1.11:5000/login', code=302)
     except Exception as e:
         return render_template('error.html', error = str(e))
 
@@ -68,9 +68,8 @@ def poller():
         r = request.get_json()
         uid = r['uid']
         result = check_result(uid)
-        if result['msg'] == 'changed':
-            return Response(response=json.dumps(result['res'], status=200, mimetype="application/json"))
-        return Response(response=json.dumps('unchanged'), status=200)
+        print(result)
+        return Response(response=json.dumps(result), status=200)
     except Exception as e:
         print(str(e))
         return Response('{"error":"' + str(e) + '"}', status=400)
@@ -165,4 +164,4 @@ if __name__ == '__main__':
     job = threading.Thread(target=job_q_to_qms, args=())
     job.daemon = True
     job.start()
-    app.run(host='192.168.43.50', port='5000', debug=True)
+    app.run(host='192.168.1.11', port='5000', debug=True)
