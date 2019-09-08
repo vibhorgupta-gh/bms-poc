@@ -140,7 +140,7 @@ def save_user(uid, purpose, priority):
         if counter >= 1:
             return 'success'
 
-        elif priority is 0:
+        elif priority is 1:
             high_value_user_list.append(User(uid, purpose, priority))
 
         step_list = []
@@ -190,16 +190,13 @@ def save_transaction(transaction):
 # data helpers
 def init_data():
     func = dict()
-    func['Locker'] = ['x', 'b', 'z']
-    func['B'] = ['a', 'z', 'x']
-    func['C'] = ['a', 'b', 'c']
+    func['Locker'] = ['Counter 1', 'Counter 2', 'Counter 3']
+
 
     steps = dict()
-    steps['x'] = Step('x', 3, [[],[],[]])
-    steps['z'] = Step('z', 4, [[],[],[],[]])
-    steps['a'] = Step('a', 2, [[],[]])
-    steps['b'] = Step('b', 3, [[],[],[]])
-    steps['c'] = Step('c', 4, [[],[],[],[]])
+    steps['Counter 1'] = Step('x', 3, [[],[],[]])
+    steps['Counter 3'] = Step('z', 4, [[],[],[],[]])
+    steps['Counter 2'] = Step('b', 3, [[],[],[]])
 
     employee_dict = dict()
     employee_dict['666'] = Employee('John Doe', '666', '1')
@@ -265,7 +262,7 @@ def queue_manager(user):
                 break
 
         if all_visited is True:
-            if user.priority == 0:
+            if user.priority == 1:
                 for u in high_value_user_list:
                     if u.uid == user.uid:
                         high_value_user_list.remove(u)

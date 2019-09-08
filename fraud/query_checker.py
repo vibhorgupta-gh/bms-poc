@@ -16,7 +16,7 @@ def driver(trans):
 
 def checker(trans):
 	x = driver(trans)
-	print(x)
+	print('yay' + str(x))
 	if x>=0.4:
 		return 0
 	else:
