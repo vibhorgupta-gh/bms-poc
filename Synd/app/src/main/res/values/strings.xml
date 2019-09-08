@@ -1,0 +1,12 @@
+<resources>
+    <string name="app_name">Synd</string>
+    <string-array name="purpose_array">
+        <item>Select…</item>
+        <item>Cashier</item>
+        <item>Loans</item>
+        <item>Locker</item>
+        <item>RTGS etc</item>
+        <item>Tax Payment</item>
+        <item>Other</item>
+    </string-array>
+</resources>
